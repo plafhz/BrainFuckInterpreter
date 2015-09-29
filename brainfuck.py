@@ -33,15 +33,16 @@ class BrainFuck:
 	def runDebug(self):
 		while self.contadorCodigo < len(self.code):
 			if self.code[self.contadorCodigo] in self.instrucciones:
+				
+				self.instrucciones[self.code[self.contadorCodigo]]()
 
-				print "Codigo:     ", self.contadorCodigo
+				print "Codigo:     ", self.contadorCodigo + 1
 				print "Puntero:    ", self.pv
-				print "Celda:      ", self.vector[self.pv]
+				print "Celda:      ", self.vector
 				print "Bucle:      ", self.posicionBucle
 				print "Instruccion:", self.code[self.contadorCodigo]
 				raw_input("......")
 
-				self.instrucciones[self.code[self.contadorCodigo]]()
 			self.contadorCodigo += 1
 
 	def incrementarPuntero(self):
@@ -52,10 +53,10 @@ class BrainFuck:
 		self.pv -= 1
 
 	def incrementarByte(self):
-		self.vector[self.pv] += 1
+		self.vector[self.pv] = (self.vector[self.pv] + 1) & 0xff # entero de 8bits
 
 	def decrementarByte(self):
-		self.vector[self.pv] -= 1 if self.vector[self.pv] > 0 else 0
+		self.vector[self.pv] = (self.vector[self.pv] - 1) & 0xff # entero de 8 bits
 
 	def escribir(self):
 		print chr(self.vector[self.pv]),
