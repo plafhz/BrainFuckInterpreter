@@ -1,6 +1,8 @@
+import sys
+
 class BrainFuck:
-	def __init__(self, code, tam = 30000):
-		self.vector = [0] * tam
+	def __init__(self, code, debug = False):
+		self.vector = [0]
 		self.pv = 0 # Puntero del vector
 		self.contadorCodigo = 0
 		self.posicionBucle = []
@@ -17,7 +19,10 @@ class BrainFuck:
 			"]" : self.finalBucle
 		}
 
-		self.run()
+		if not debug:
+			self.run()
+		else:
+			self.runDebug()
 
 	def run(self):
 		while self.contadorCodigo < len(self.code):
@@ -41,6 +46,7 @@ class BrainFuck:
 
 	def incrementarPuntero(self):
 		self.pv += 1
+		if self.pv >= len(self.vector): self.vector.append(0)
 
 	def decrementarPuntero(self):
 		self.pv -= 1
@@ -83,9 +89,19 @@ class BrainFuck:
 				return i
 
 def main():
-	while True:
-		source = open(raw_input("Src: "), "r")
-		bf = BrainFuck(source.read())
+	debug = False
+
+	for arg in sys.argv:
+		if arg == "-d":
+			debug = True
+
+	try:
+		source = open(sys.argv[1], "r")
+	except:
+		print "Archivo fuente no encontrado."
+		sys.exit()
+
+	bf = BrainFuck(source.read(), debug = debug)
 
 if __name__ == '__main__':
 	main()
