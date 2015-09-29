@@ -62,7 +62,7 @@ class BrainFuck:
 
 	def leer(self):
 		try:
-			self.vector[self.pv] = raw_input()[0]
+			self.vector[self.pv] = ord(raw_input()[0])
 		except:
 			self.contadorCodigo -= 1
 
